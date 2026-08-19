@@ -1,0 +1,18 @@
+{
+    "name": "Fory Session Serializer",
+    "owner": "WSO2",
+    "category": "Session Management",
+    "documentationUrl": "https://github.com/wso2-extensions/identity-serializer-fory/blob/main/README.md",
+    "description": "An extension that improves DB performance in WSO2 Identity Server by leveraging Apache Fory serialization instead of the default Java serializer for session objects.",
+    "status": "Active",
+    "labels": ["Performance"],
+    "releases": [
+        {
+            "tagName": "v1.0.0",
+            "products": [
+                "IS 7.2.0",
+                "IS 7.3.0"
+            ]
+        }
+    ]
+}
