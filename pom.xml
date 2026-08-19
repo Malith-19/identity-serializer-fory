@@ -25,6 +25,13 @@
         <version>1.4</version>
     </parent>
 
+    <scm>
+        <url>https://github.com/wso2-extensions/identity-serializer-fory.git</url>
+        <developerConnection>scm:git:https://github.com/wso2-extensions/identity-serializer-fory.git</developerConnection>
+        <connection>scm:git:https://github.com/wso2-extensions/identity-serializer-fory.git</connection>
+        <tag>HEAD</tag>
+    </scm>
+
     <groupId>org.wso2.carbon.extension.identity.serializer.fory</groupId>
     <artifactId>identity-serializer-fory</artifactId>
     <version>1.0.0-SNAPSHOT</version>
