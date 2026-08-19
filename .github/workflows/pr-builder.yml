@@ -1,0 +1,45 @@
+# This workflow will build the project on pull requests with tests
+# Uses:
+#   OS: ubuntu-latest
+#   JDK: Temurin 11, 17, 21, 25 (project targets Java 11+; 11/17/21/25 are the LTS lines)
+
+name: PR Builder
+
+on:
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+env:
+  MAVEN_OPTS: -Xmx4g -Xms1g
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: ["11", "17", "21", "25"]
+
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Temurin JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v5
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: "temurin"
+      - name: Cache local Maven repository
+        id: cache-maven-m2
+        uses: actions/cache@v6
+        env:
+          cache-name: cache-m2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ env.cache-name }}-${{ matrix.java-version }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-${{ env.cache-name }}-${{ matrix.java-version }}-
+            ${{ runner.os }}-maven-
+            ${{ runner.os }}-
+      - name: Build with Maven
+        run: mvn clean install -U -B
+      - name: Delete SNAPSHOT artifacts
+        run: find ~/.m2/repository/ -name "*-SNAPSHOT" -type d -print -prune -exec rm -r {} +
